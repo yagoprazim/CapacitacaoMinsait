@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport"
@@ -9,26 +9,37 @@
 </head>
 <body>
     <h1>Calculadora Spring</h1>
-    <form action="/" method="post">
-        <label>Operações</label>
-        <select name="modelOperacao">
-            <option value="Soma">Soma</option>
-            <option value="Subtracao">Subtração</option>
-        </select>
-        <br>
-        <br>
-        <label>Valor 1</label>
-        <input type="text" name="valor01">
-        <br>
-        <br>
-        <label>Valor 2</label>
-        <input type="text" name="valor02">
-        <br>
-        <br>
-        <button type="submit">Calcular</button>
-    </form>
-
-    <p><b>Resultado da operação:</b> <span th:text="${response}"></span></p>
+    <div>
+        <form action="#" th:action="@{/}" method="post" id="operacaoForm">
+            <div>
+                <label for="modelOperacoes">Selecione a operação:</label>
+                <select id="modelOperacoes" name="modelOperacoes">
+                    <option th:each="operacao: ${modelOperacoes}"
+                            th:value="${operacao}"
+                            th:text="${operacao}"
+                            th:selected="${operacao == selectedModel}">
+                        Operação
+                    </option>
+                </select>
+            </div>
+            <div>
+                <label for="valor01">Valor 01:</label>
+                <input id="valor01" name="valor01" type="text" />
+            </div>
+            <div>
+                <label for="valor02">Valor 02:</label>
+                <input id="valor02" name="valor02" type="text" />
+            </div>
+            <div>
+                <button type="submit" id="submitBtn">Calcular</button>
+            </div>
+        </form>
+        <!-- Seção de resposta -->
+        <div th:if="${response != null}" id="responseDiv">
+            <h4>Resposta:</h4>
+            <span th:text="${response}"></span>
+        </div>
+    </div>
 
 </body>
 </html>
